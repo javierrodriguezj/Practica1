@@ -192,5 +192,51 @@ str(fl_json)
 head(fl_json)
 tail(fl_json)
 summary(fl_json) 
+
+save(fl_json, file= './results/FileCodificado.RData')
+```
+# Fichero JSON iris_json.json
+
+## Importar el fichero iris_json.json
+
+```{r}
+iris_rjson <- read_json('./data/data_iris_json.json',simplifyVector = T)
+iris_fjson <- fromJSON('./data/data_iris_json.json')
+
+save(iris_fjson, file= './results/iris_json.RData')
+```
+La diferencia que vemos es que fromJSON lleva el simlifyVector= TRUE por defecto.
+
+## Inspección de los datos
+```{r}
+str(iris_fjson)
+head(iris_fjson)
+tail(iris_fjson)
+summary(iris_fjson) 
 ```
 
+## Exportar datos en formato JSON
+
+```{r}
+load('./results/iris.RData')
+filename <- 'data/iris_json_v2.json'
+write_json(iris, filename)
+read_json('./data/iris_json_v2.json',simplifyVector = T)
+```
+
+```{r}
+iris_json_compacto <- toJSON(iris)
+
+write_file(iris_json_compacto, "data/iris_compacto.json")
+
+```
+
+```{r}
+iris_json_bonito <- toJSON(iris, pretty = TRUE)
+
+
+write_file(iris_json_bonito, "data/iris_pretty.json")
+```
+Sin pretty el archivo resultante contiene una única línea con todas las filas comprimidas. Ocupa un poco menos de espacio, pero es prácticamente ilegible a simple vista.
+
+Con pretty el archivo se organiza verticalmente con espacios y tabulaciones, permitiendo abrir el archivo en RStudio y entender fácilmente la jerarquía de los datos.
