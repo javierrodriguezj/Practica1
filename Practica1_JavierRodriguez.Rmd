@@ -72,6 +72,7 @@ knit_hooks$set(inline = function(x) {
   }
 })
 #knit_hooks$set(plot = knitr:::hook_plot_html)
+library(readr)
 ```
 
 
@@ -175,5 +176,21 @@ str(iris_raw)
 head(iris_raw)
 tail(iris_raw)
 summary(iris_raw)
+```
+# Fichero JSON FileCodificado.json
+Cargamos la librería
+
+```{r}
+library(jsonlite)
+filename <- 'data/FileCodificado.json'
+fl_json <- read_json(filename, simplifyVector = T)
+```
+
+## Inspección de los datos
+```{r}
+str(fl_json)
+head(fl_json)
+tail(fl_json)
+summary(fl_json) 
 ```
 
