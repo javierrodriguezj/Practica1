@@ -1,0 +1,134 @@
+---
+title: "Práctica 1: Importación de datos."
+author: "Javier Rodríguez Jiménez"
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    figure_caption: "Figura" # Referencias en castellano
+    table_caption: "Tabla"
+  html_document:
+    echo: true
+    number_sections: true
+    theme: lumen
+    toc: true
+  html_notebook:
+    echo: true
+    number_sections: true
+    toc: true
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  bookdown::html_document2:
+    echo: true
+    number_sections: true
+    theme: spacelab
+    toc: true
+    figure_caption: "Figura"
+    table_caption: "Tabla"
+always_allow_html: true
+params:
+  lang: ES
+lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
+subtitle: "Análisis Exploratorio de Datos. Máster en Ciencia de Datos - UV"
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+---
+
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
+
+
+# CONFIGURACIÓN GENERAL
+library(knitr)
+options(width = 100)
+
+# Opciones generales de los chucks. Se utilizarán salvo cambios en el chunk
+opts_chunk$set(echo=F, message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 200, tidy = F, cache.path = '.cache/', fig.path = './figura/')
+
+# Opciones generales de dígitos cuando se incluyen tablas
+#options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+#knit_hooks$set(plot = knitr:::hook_plot_html)
+```
+
+
+# Lectura del fichero DFP1_11122015 124700.csv
+
+## Importación del fichero
+
+La diferencia entre importar con readr y base es que en readr te permite seleccionar el tipo de variable que es cada columna. Por otro lado, en base reconoció automáticamente que la separación es de tipo tabulador mientras que en readr no ocurrió lo mismo. Pero en cuanto a contenido y cómo importa el contenido, no hay diferencia.
+
+Ahora importamos el fichero __DFP1_11122015 124700.csv__ con read.csv
+
+```{r}
+fname <- 'data/DFP1_11122015 124700.csv'
+fichero1 <- read.csv(fname, sep="\t", stringsAsFactors=F)
+```
+
+Convertimos a fecha y hora cargando la librería
+
+```{r}
+library(hms)
+
+fichero1$FECHA <- as.POSIXlt(fichero1$FECHA, format = "%d/%m/%Y")
+fichero1$HORA <- as.hms(fichero1$HORA)
+
+save(fichero1, file = './data/results/DFP1_11122015 124700.RData')
+```
+
+## Importación del fichero
+
+```{r}
+str(fichero1)
+```
+Vemos las características principales del contenido de nuestros datos como el nombre de las variables, número de observaciones, tipo de variables, etc.
+
+```{r}
+head(fichero1)
+tail(fichero1)
+```
+
+Vemos las primeras observaciones y las últimas.
+
+```{r}
+fichero1$HORA <- as.character(fichero1$HORA)
+summary(fichero1)
+fichero1$HORA <- hms::as.hms(fichero1$HORA) # me daba error en el formato 
+
+```
+Nos da un resumen estadístico de cada variable
+
+# Transactions from a Bakery (Kaggle)
+Leemos los datos
+
+```{r}
+filename <- "data/bakery_sales_revised.csv"
+
+```
+
+
+
+
