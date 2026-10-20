@@ -122,10 +122,23 @@ fichero1$HORA <- hms::as.hms(fichero1$HORA) # me daba error en el formato
 Nos da un resumen estadístico de cada variable
 
 # Transactions from a Bakery (Kaggle)
-Leemos los datos
+Leemos los datos con readr especificando con dato tipo fecha
 
 ```{r}
-filename <- "data/bakery_sales_revised.csv"
+bakery_sales_revised <- read_csv("data/bakery_sales_revised.csv", 
+    col_types = cols(date_time = col_datetime(format = "%m/%d/%Y %H:%M")))
+```
+
+```{r}
+str(bakery_sales_revised)
+summary(bakery_sales_revised)
+head(bakery_sales_revised)
+tail(bakery_sales_revised)
+```
+# Lectura de SPSS PsychBike.sav
+
+```{r}
+library(haven)
 
 ```
 
