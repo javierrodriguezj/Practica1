@@ -96,7 +96,7 @@ library(hms)
 fichero1$FECHA <- as.POSIXlt(fichero1$FECHA, format = "%d/%m/%Y")
 fichero1$HORA <- as.hms(fichero1$HORA)
 
-save(fichero1, file = './data/results/DFP1_11122015 124700.RData')
+save(fichero1, file = './results/DFP1_11122015 124700.RData')
 ```
 
 ## Importación del fichero
@@ -152,13 +152,28 @@ datos4$hour <- hms::as.hms(datos4$hour) # me daba error en el formato
 ```
 
 # Fichero data iris.zip
-
+Descargamos y los ubicamos en la carpeta data
 ```{r}
 url <- 'https://archive.ics.uci.edu/static/public/53/iris.zip'
 destino <- './data/iris.zip'
 download.file(url, destfile = destino)
-unzip('./data/iris.zip', 'iris_descomp')
+unzip('./data/iris.zip', exdir = './data')
+```
+## Importación del fichero
+
+```{r}
+iris_raw <- read.table('./data/iris.data', sep = ',')
+colnames(iris_raw) <- c('sepal_length', 'sepal_length', 'petal_length', 'petal_length')
+save(iris_raw, file = './results/iris_raw.RData')
+
 ```
 
+## Inspección de los datos
 
+```{r}
+str(iris_raw)
+head(iris_raw)
+tail(iris_raw)
+summary(iris_raw)
+```
 
