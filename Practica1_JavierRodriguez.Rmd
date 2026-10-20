@@ -151,6 +151,14 @@ summary(datos4)
 datos4$hour <- hms::as.hms(datos4$hour) # me daba error en el formato 
 ```
 
+# Fichero data iris.zip
+
+```{r}
+url <- 'https://archive.ics.uci.edu/static/public/53/iris.zip'
+destino <- './data/iris.zip'
+download.file(url, destfile = destino)
+unzip('./data/iris.zip', 'iris_descomp')
+```
 
 
 
