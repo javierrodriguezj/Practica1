@@ -139,7 +139,16 @@ tail(bakery_sales_revised)
 
 ```{r}
 library(haven)
+filename <- "data/PsychBike.sav"
+datos4 <- read_sav(filename)
 
+str(datos4)
+head(datos4)
+tail(datos4)
+
+datos4$hour <- as.character(datos4$hour)
+summary(datos4)
+datos4$hour <- hms::as.hms(datos4$hour) # me daba error en el formato 
 ```
 
 
